@@ -2,9 +2,10 @@
 
 function usage() {
 	echo """spotiPy launcher
-  --credentials     Set credentials.
-  --install         Install venv with dependencies, connect with github and proccess credentials.
-  --help            Print this help.
+  run             Run spotiPy CLI.
+  credentials     Set credentials.
+  install         Install venv with dependencies, connect with github and proccess credentials.
+  help            Print this help.
   """
 }
 
@@ -36,4 +37,37 @@ function credentials() {
 	echo "[!] Sredentials saved"
 }
 
-credentials
+function install() {
+	echo "[!] Creating virtual enviroment"
+	cd spotipy_env
+	python3 -m venv .
+
+	echo "[!] Installing dependencies"
+	source bin/activate
+	python -m ensurepip
+	pip install -r requirement.txt
+	deactivate
+	cd ..
+}
+
+function run() {
+	echo "[!] Checking for updates"
+	git pull
+
+	echo "[!] Running virtual enviroment"
+	source spotipy_env/bin/activate
+	python -m spotipy_env
+	echo "[!] Exiting virtual enviroment"
+	deactivate
+}
+
+if [ "$1" == "run" ]; then
+	run
+elif [ "$1" == "credentials" ]; then
+	credentials
+elif [ "$1" == "install" ]; then
+	install
+	credentials
+else
+	usage
+fi
