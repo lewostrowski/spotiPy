@@ -45,7 +45,7 @@ function install() {
 	echo "[!] Installing dependencies"
 	source bin/activate
 	python -m ensurepip
-	pip install -r requirement.txt
+	pip install -r ../requirement.txt
 	deactivate
 	cd ..
 }
