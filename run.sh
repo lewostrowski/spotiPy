@@ -2,10 +2,10 @@
 
 function usage() {
 	echo """spotiPy launcher
-  run             Run spotiPy CLI.
-  credentials     Set credentials.
-  install         Install venv with dependencies, connect with github and proccess credentials.
-  help            Print this help.
+  run             Run spotiPy CLI
+  credentials     Set credentials
+  install         Install venv with dependencies and proccess credentials
+  help            Print this help
   """
 }
 
@@ -46,6 +46,7 @@ function install() {
 	source bin/activate
 	python -m ensurepip
 	pip install -r ../requirement.txt
+	pip install --upgrade spotdl
 	deactivate
 	cd ..
 }
