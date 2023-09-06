@@ -6,12 +6,10 @@ import os
 import json
 import beaupy
 from rich.console import Console
-from spotipy import Spotipy
+from .spotipy import Spotipy
 
 # Display spinner while loading.
 wait_animation = beaupy.spinners.Spinner(beaupy.spinners.ARC, refresh_per_second=4)
-# TODO(): sh launcher with updater and installer (venv) + credentials
-# TODO(): module and change names to __init__ and wrapper
 # TODO(): utils module
 # TODO(): args for wrapper
 # TODO(): dev branch
@@ -205,29 +203,26 @@ class Menu(Spotipy):
             self.next_space = "MAIN"
 
 if __name__ == "__main__":
-    if "credentials.json" in os.listdir():
-        with open("credentials.json", "r") as f:
-            credentials = json.loads(f.read())
+    if "credentials" in os.listdir():
+        with open("credentials", "r") as f:
+            credentials = {l.split("=")[0]: l.split("=")[1].replace("\n", "") for l in f.readlines()}
+    
     else:
-        print("Provide Spotify user id and API keys.")
-        print("Data will be saved in json file in working directory.")
-        user_id = input("user_id: ")
-        api_key = input("api_key: ")
-        api_secret = input("api_secret: ")
-
-        credentials = {
-            "user_id": user_id,
-            "api_key": api_key,
-            "api_secret": api_secret
-        }
-
-        with open("credentials.json", "w") as f:
-            f.write(json.dumps(credentials))
+        print("[E] Credentials file not found. Use launcher script or create plain text as follow:")
+        print("""
+        file name: credentials
+        
+        content (you need to provide valid values):
+            USERID=
+            KEY=
+            SECRET=
+        """)
+        raise SystemExit('[!] Aborted')
 
     menu = Menu(
-        credentials["user_id"],
-        credentials["api_key"],
-        credentials["api_secret"]
+        credentials["USERID"],
+        credentials["KEY"],
+        credentials["SECRET"]
     )
     
     os.system("clear")
