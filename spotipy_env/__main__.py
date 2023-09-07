@@ -10,10 +10,6 @@ from .spotipy import Spotipy
 
 # Display spinner while loading.
 wait_animation = beaupy.spinners.Spinner(beaupy.spinners.ARC, refresh_per_second=4)
-# TODO(): utils module
-# TODO(): args for wrapper
-# TODO(): dev branch
-# TODO(): docs
 
 class Menu(Spotipy):
     def __init__(self, user_id: str, api_key: str, api_secret: str):

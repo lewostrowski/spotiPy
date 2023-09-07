@@ -6,13 +6,14 @@ function usage() {
   run             Run spotiPy CLI
   credentials     Set credentials
   install         Install venv with dependencies and proccess credentials
+  docker_mode     Same as run, but whie in dokcer
   help            Print this help
   """
 }
 
 # Set user credentials.
 function credentials() {
-	echo "[!] Provide Spotify cerendetials"
+	echo "[!] Provide Spotify crendetials"
 
 	# Check for existing file.
 	if [ -f credentials ]; then
@@ -33,7 +34,7 @@ function credentials() {
 		read -p "[>] $value: " temp
 		echo "$value=$temp" >>credentials
 	done
-	echo "[!] Sredentials saved"
+	echo "[!] Credentials saved"
 }
 
 # Setup Python enviroment and install dependencies.
@@ -63,6 +64,13 @@ function run() {
 	deactivate
 }
 
+function run_in_docker() {
+	if [ ! -f credentials ]; then
+		credentials
+	fi
+	python -m spotipy_env
+}
+
 if [ "$1" == "run" ]; then
 	run
 elif [ "$1" == "credentials" ]; then
@@ -70,6 +78,8 @@ elif [ "$1" == "credentials" ]; then
 elif [ "$1" == "install" ]; then
 	install
 	credentials
+elif [ "$1" == "docker_mode" ]; then
+	run_in_docker
 else
 	usage
 fi
