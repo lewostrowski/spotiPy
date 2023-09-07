@@ -140,15 +140,3 @@ class Spotipy:
         else:
             response.raise_for_status()
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--search")
-    args = parser.parse_args()
-    
-    user_id = "11133365832"
-    api_key = "1becf788e8914edd9ff5b1c4ba9ef264",
-    api_secret = "2d461b0d15774be2b269978164190cd8"
-
-    spoti = Spotipy(user_id, api_key, api_secret) 
-    print(spoti.search_song({"artist": "Aes Dana"}))

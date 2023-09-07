@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Print help message.
 function usage() {
 	echo """spotiPy launcher
   run             Run spotiPy CLI
@@ -9,12 +10,12 @@ function usage() {
   """
 }
 
+# Set user credentials.
 function credentials() {
 	echo "[!] Provide Spotify cerendetials"
 
 	# Check for existing file.
 	if [ -f credentials ]; then
-		# Aks user if overwrite file.
 		echo "[!] File with credentials already exists"
 		read -p "[?] Overwrite? [y/n] " decision
 
@@ -24,12 +25,10 @@ function credentials() {
 			echo "[!] Aborted"
 			exit 1
 		fi
-	# Create file if doesn't exists.
 	else
 		touch credentials
 	fi
 
-	# Read user id, api key and api secret.
 	for value in USERID KEY SECRET; do
 		read -p "[>] $value: " temp
 		echo "$value=$temp" >>credentials
@@ -37,6 +36,7 @@ function credentials() {
 	echo "[!] Sredentials saved"
 }
 
+# Setup Python enviroment and install dependencies.
 function install() {
 	echo "[!] Creating virtual enviroment"
 	cd spotipy_env
@@ -51,6 +51,7 @@ function install() {
 	cd ..
 }
 
+# Check for updates and run script.
 function run() {
 	echo "[!] Checking for updates"
 	git pull
